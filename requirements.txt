@@ -3,3 +3,4 @@ uvicorn
 yfinance
 jinja2
 pytest
+sqlalchemy
