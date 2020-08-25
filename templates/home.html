@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Stock Screener</h1>
+
+    <table class="ui celled table">
+        <thead>
+          <tr><th>Symbol</th>
+          <th>P/E</th>
+          <th>Dividend Yield</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="Name">MSFT</td>
+            <td data-label="Age">24</td>
+            <td data-label="Job">2</td>
+          </tr>
+          <tr>
+            <td data-label="Name">AAPL</td>
+            <td data-label="Age">26</td>
+            <td data-label="Job">3</td>
+          </tr>
+          <tr>
+            <td data-label="Name">FB</td>
+            <td data-label="Age">24</td>
+            <td data-label="Job">0</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+{% endblock %}
