@@ -29,10 +29,15 @@ def get_db():
 
 
 @app.get("/")
-def dashboard(request: Request, db: Session = Depends(get_db)):
+def dashboard(request: Request, forward_pe = None, dividend_yield = None, ma_50 = None, ma_200 = None, db: Session = Depends(get_db)):
     """ Dashboard
     """
-    stocks = db.query(Stock).all()
+    stocks = db.query(Stock)
+
+    if forward_pe is not None:
+        stocks = stocks.filter(Stock.forward_pe < forward_pe)
+
+
     print(stocks)
     return templates.TemplateResponse("home.html", {
         "request": request,
