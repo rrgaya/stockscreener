@@ -7,8 +7,6 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from models import Stock
 
-from fastapi.encoders import jsonable_encoder
-
 
 Base.metadata.create_all(bind=engine)
 
