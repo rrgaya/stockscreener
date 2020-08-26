@@ -1,57 +1,113 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Stock Screener</h1>
+<script>
+    $(document).ready(function() {
+        $("#add_stocks").click(function(){
+            $('.ui.modal').modal('show')
+        })
 
+        $("#save").click(function(){
+            var symbols = $("#symbols").val();
+            console.log(symbols);
+            
+            var stock_symbols = symbols.split("\n")
+            console.log(stock_symbols);
+            
+            for(var i = 0; i < stock_symbols.length; i++){
+                console.log(stock_symbols[i]);
+                $.ajax({
+                    url: "/stock/",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({"symbol": stock_symbols[i]}),
+                    dataType: "json"
+                })
+            }
+            $('.ui.modal').modal('hide')
+        })
+    });
+</script>
 
-<div class="ui input">
-    <input type="text" placeholder="P/E Ratio">
+<div>
+
+    <div class="ui input">
+        <input name="forware_pe" type="text" placeholder="P/E Ratio">
+    </div>
+
+    <div class="ui input">
+        <input name="dividend_yield" type="text" placeholder="Dividend Yield">
+    </div>
+
+    <div class="ui checkbox">
+        <input name="ma50" type="checkbox">
+        <label>Above 50 Day MA</label>
+    </div>
+
+    <div class="ui checkbox">
+        <input name="ma200" type="checkbox">
+        <label>Above 200 Day MA</label>
+    </div>
+
+    <button type="submit" class="ui button primary">Filter</button>
+
+    <button id="add_stocks" class="ui button">Add Stocks</button>
+
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>price</th>
+                <th>Forward P/E</th>
+                <th>Forward_EPS</th>
+                <th>Dividend Yield</th>
+                <th>50 days</th>
+                <th>200 days</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td data-label="Name">{{ stock.symbol }}</td>
+                <td data-label="Age">{{ stock.price }}</td>
+                <td data-label="Job">{{ stock.forward_pe }}</td>
+                <td data-label="Job">{{ stock.forward_eps }}</td>
+                <td data-label="Job">{{ stock.dividend_yield }}</td>
+                <td data-label="Job">{{ stock.ma50 }}</td>
+                <td data-label="Job">{{ stock.ma200 }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+    </table>
 </div>
 
-<div class="ui input">
-    <input type="text" placeholder="Dividend Yield">
+
+
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Add Stock Symbol
+    </div>
+    <div class="content">
+
+        <div class="ui form">
+            <div class="field">
+                <label>Enter Stock symbols</label>
+                <textarea id="symbols"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="actions">
+        <!-- <div class="ui black deny button">
+            Nope
+        </div> -->
+        <div id="save" class="ui positive right labeled icon button">
+            Add Symbols
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
 </div>
-
-<div class="ui checkbox">
-    <input type="checkbox" name="example">
-    <label>Above 50 Day MA</label>
-</div>
-
-<div class="ui checkbox">
-    <input type="checkbox" name="example">
-    <label>Above 200 Day MA</label>
-</div>
-
-<button class="ui button primary">
-    Filter Data
-</button>
-
-<table class="ui celled table">
-    <thead>
-        <tr>
-            <th>Symbol</th>
-            <th>P/E</th>
-            <th>Dividend Yield</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td data-label="Name">MSFT</td>
-            <td data-label="Age">24</td>
-            <td data-label="Job">2</td>
-        </tr>
-        <tr>
-            <td data-label="Name">AAPL</td>
-            <td data-label="Age">26</td>
-            <td data-label="Job">3</td>
-        </tr>
-        <tr>
-            <td data-label="Name">FB</td>
-            <td data-label="Age">24</td>
-            <td data-label="Job">0</td>
-        </tr>
-    </tbody>
-</table>
 
 
 {% endblock %}

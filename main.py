@@ -29,11 +29,14 @@ def get_db():
 
 
 @app.get("/")
-def dashboard(request: Request):
+def dashboard(request: Request, db: Session = Depends(get_db)):
     """ Dashboard
     """
+    stocks = db.query(Stock).all()
+    print(stocks)
     return templates.TemplateResponse("home.html", {
-        "request": request
+        "request": request,
+        "stocks": stocks
     })
 
 
