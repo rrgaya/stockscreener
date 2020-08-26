@@ -1,14 +1,20 @@
+import databases
+import sqlalchemy
+from decouple import config
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./stocks.db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
+DB_USER = config("DB_USER")
+DB_PASS = config("DB_PASS")
+HOST = config("HOST")
+PORT = config("PORT")
+DBNAME = config("DBNAME")
 
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{HOST}:{PORT}/{DBNAME}"
+
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

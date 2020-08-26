@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  db:
+    image: postgres:10.3-alpine
+    container_name: "db_stocks"
+    environment:
+      POSTGRES_DB: stocks
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+        - /tmp/docker/postgresql:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - stockscreener
+
+  pgadmin:
+    image: thajeztah/pgadmin4
+    container_name: "pgadmin_stocks"
+    depends_on:
+      - db
+    ports:
+      - "5050:5050"
+    networks:
+      - stockscreener
+
+networks:
+  stockscreener:
+    driver: bridge
