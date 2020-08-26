@@ -34,14 +34,28 @@ def dashboard(request: Request, forward_pe = None, dividend_yield = None, ma_50 
     """
     stocks = db.query(Stock)
 
-    if forward_pe is not None:
+    if forward_pe:
         stocks = stocks.filter(Stock.forward_pe < forward_pe)
+
+    if dividend_yield:
+        stocks = stocks.filter(Stock.dividend_yield > dividend_yield)
+
+    if ma_50:
+        stocks = stocks.filter(Stock.ma50 > ma_50)
+
+    if ma_200:
+        stocks = stocks.filter(Stock.ma200 > ma_200)
+
 
 
     print(stocks)
     return templates.TemplateResponse("home.html", {
         "request": request,
-        "stocks": stocks
+        "stocks": stocks,
+        "dividend_yield": dividend_yield,
+        "forward_pe": forward_pe,
+        "ma_200": ma_200,
+        "ma_50": ma_50
     })
 
 
