@@ -15,7 +15,7 @@ DBNAME = config("DBNAME")
 # DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{HOST}:{PORT}/{DBNAME}"
 
 if "DATABASE_URL" in os.environ:
-    ENV_DATABASE_URL = "postgres://ynrbxtwqegmste:58feea2c66eac7b672bc088ca20f50153320f9976896a52954af13e8aec90c74@ec2-34-224-229-81.compute-1.amazonaws.com:5432/d35so8n7e5oj21"
+    ENV_DATABASE_URL = os.environ.get("DATABASE_URL")
 else:
     ENV_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/stocks"
 
