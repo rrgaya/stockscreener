@@ -17,7 +17,7 @@ DBNAME = config("DBNAME")
 if "DATABASE_URL" in os.environ:
     ENV_DATABASE_URL = os.environ.get("DATABASE_URL")
 else:
-    ENV_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/stocks"
+    ENV_DATABASE_URL = config("LOCAL_DATABASE_URL")
 
 engine = create_engine(ENV_DATABASE_URL)
 
