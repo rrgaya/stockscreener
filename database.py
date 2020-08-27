@@ -19,7 +19,7 @@ if "DATABASE_URL" in os.environ:
 else:
     ENV_DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/stocks"
 
-engine = create_engine(ENV_DATABASE_URLs)
+engine = create_engine(ENV_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
